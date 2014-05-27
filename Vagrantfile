@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "base"
+  config.vm.box = "chef/centos-6.5"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -45,13 +45,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider "virtualbox" do |vb|
-  #   # Don't boot with headless mode
-  #   vb.gui = true
-  #
-  #   # Use VBoxManage to customize the VM. For example to change memory:
-  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
-  # end
+  config.vm.provider "virtualbox" do |vb|
+     # Don't boot with headless mode
+     # vb.gui = true
+  
+     # Use VBoxManage to customize the VM. For example to change memory:
+     vb.customize ["modifyvm", :id, "--memory", "512"]
+  end
   #
   # View the documentation for the provider you're using for more
   # information on available options.
@@ -119,4 +119,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # chef-validator, unless you changed the configuration.
   #
   #   chef.validation_client_name = "ORGNAME-validator"
+
+  config.vm.define "mngmnt_srv" do |mngmnt_srv|
+    mngmnt_srv.vm.network "private_network", ip: "192.168.0.1"
+    mngmnt_srv.vm.hostname="mngmnt"
+  end
+
+  config.vm.define "dev_srv" do |dev_srv|
+    dev_srv.vm.network "private_network", ip: "192.168.0.2"
+    dev_srv.vm.hostname="devsrv"
+  end
+
 end
