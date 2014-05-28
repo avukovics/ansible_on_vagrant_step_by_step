@@ -123,6 +123,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "mngmnt_srv" do |mngmnt_srv|
     mngmnt_srv.vm.network "private_network", ip: "192.168.0.1"
     mngmnt_srv.vm.hostname="mngmnt"
+    mngmnt_srv.vm.provision :shell, :path => "bootstrap_manager.sh"
   end
 
   config.vm.define "dev_srv" do |dev_srv|
